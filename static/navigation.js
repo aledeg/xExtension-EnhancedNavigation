@@ -1,5 +1,11 @@
 function init_nav_entries_enhanced() {
+	console.log('EnhancedNavigation: Initializing...');
 	const nav_entries = document.getElementById('nav_entries_enhanced');
+	if (!nav_entries) {
+		console.log('EnhancedNavigation: nav_entries_enhanced element not found');
+	} else {
+		console.log('EnhancedNavigation: nav_entries_enhanced element found');
+	}
 	if (nav_entries) {
 		nav_entries.querySelector('.previous_entry').onclick = function (e) {
 			prev_entry(false);

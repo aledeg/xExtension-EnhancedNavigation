@@ -50,7 +50,7 @@ class EnhancedNavigationExtension extends Minz_Extension {
     }
 
     public function generateEnhancedNavigation(): string {
-        return <<<NAV
+        $html = <<<NAV
             <nav id="nav_entries_enhanced">
                 {$this->generatePreviousEntryButton()}
                 {$this->generateSeeOnWebsiteButton()}
@@ -59,6 +59,11 @@ class EnhancedNavigationExtension extends Minz_Extension {
                 {$this->generateNextEntryButton()}
             </nav>
             NAV;
+        
+        // Debug: log to FreshRSS error log
+        error_log("EnhancedNavigation: Generated HTML: " . $html);
+        
+        return $html;
     }
 
     private function generateButton(string $class, string $title, string $icon): string {
