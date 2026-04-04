@@ -51,7 +51,7 @@ class EnhancedNavigationExtension extends Minz_Extension {
 
     public function generateEnhancedNavigation(): string {
         $html = <<<NAV
-            <nav id="nav_entries_enhanced">
+            <nav id="nav_entries_enhanced" style="background-color: #ff000020; border-top: 2px solid red;">
                 {$this->generatePreviousEntryButton()}
                 {$this->generateSeeOnWebsiteButton()}
                 {$this->generateUpButton()}

@@ -1,5 +1,6 @@
-#nav_entries {
-    display: none;
+#nav_entries, /* Hide original desktop navigation */
+#nav_entries_mobile /* Hide original mobile navigation if it exists */ {
+    display: none !important;
 }
 
 #nav_entries_enhanced {
