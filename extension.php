@@ -8,11 +8,8 @@ class EnhancedNavigationExtension extends Minz_Extension {
     public function init(): void {
         $this->registerTranslates();
 
-        if (version_compare(FRESHRSS_VERSION, '1.28') >= 0) {
-            $this->registerHook(Minz_HookType::NavEntries, [$this, 'generateEnhancedNavigation']);
-        } else {
-            $this->registerHook('nav_entries', [$this, 'generateEnhancedNavigation']);
-        }
+        // Use string hook name for compatibility with all versions
+        $this->registerHook('nav_entries', [$this, 'generateEnhancedNavigation']);
 
         Minz_View::appendStyle($this->getFileUrl('navigation.css', 'css'));
         Minz_View::appendScript($this->getFileUrl('navigation.js', 'js'));
@@ -53,8 +50,8 @@ class EnhancedNavigationExtension extends Minz_Extension {
     }
 
     public function generateEnhancedNavigation(): string {
-        return <<<NAV
-            <nav id="nav_entries_enhanced">
+        $html = <<<NAV
+            <nav id="nav_entries_enhanced" style="background-color: #ff000020; border-top: 2px solid red;">
                 {$this->generatePreviousEntryButton()}
                 {$this->generateSeeOnWebsiteButton()}
                 {$this->generateUpButton()}
@@ -62,6 +59,11 @@ class EnhancedNavigationExtension extends Minz_Extension {
                 {$this->generateNextEntryButton()}
             </nav>
             NAV;
+        
+        // Debug: log to FreshRSS error log
+        error_log("EnhancedNavigation: Generated HTML: " . $html);
+        
+        return $html;
     }
 
     private function generateButton(string $class, string $title, string $icon): string {
@@ -112,22 +114,22 @@ class EnhancedNavigationExtension extends Minz_Extension {
     }
 
     public function showPreviousEntryButton(): bool {
-        return $this->getUserConfigurationValue('show_previous_entry_button');
+        return (bool) ($this->getUserConfigurationValue('show_previous_entry_button') ?? true);
     }
 
     public function showSeeOnWebSiteButton(): bool {
-        return $this->getUserConfigurationValue('show_see_on_website_button');
+        return (bool) ($this->getUserConfigurationValue('show_see_on_website_button') ?? true);
     }
 
     public function showUpButton(): bool {
-        return $this->getUserConfigurationValue('show_up_button');
+        return (bool) ($this->getUserConfigurationValue('show_up_button') ?? true);
     }
 
     public function showFavoriteButton(): bool {
-        return $this->getUserConfigurationValue('show_favorite_button');
+        return (bool) ($this->getUserConfigurationValue('show_favorite_button') ?? true);
     }
 
     public function showNextEntryButton(): bool {
-        return $this->getUserConfigurationValue('show_next_entry_button');
+        return (bool) ($this->getUserConfigurationValue('show_next_entry_button') ?? true);
     }
 }
